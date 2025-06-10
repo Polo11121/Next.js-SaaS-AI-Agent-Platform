@@ -1,10 +1,8 @@
 "use client";
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { OctagonAlertIcon } from "lucide-react";
+import { GoAlert } from "react-icons/go";
 import {
   Form,
   FormControl,
@@ -15,64 +13,13 @@ import {
 } from "@/components/ui/form";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Card, CardContent } from "@/components/ui/card";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
+import { useSignUp } from "@/modules/auth/hooks/use-sign-up";
+import { SocialsButtons } from "@/modules/auth/ui/components/socials-button";
 import Link from "next/link";
 
-const formSchema = z
-  .object({
-    name: z.string().min(1, { message: "Name is required" }),
-    email: z.string().email(),
-    password: z.string().min(1, { message: "Password is required" }),
-    confirmPassword: z
-      .string()
-      .min(1, { message: "Please confirm your password" }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
-
-type FormValues = z.infer<typeof formSchema>;
-
 export const SignUpView = () => {
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-  });
-
-  const handleSubmit = (data: FormValues) => {
-    setError(null);
-    setIsLoading(true);
-
-    authClient.signUp.email(
-      {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-      },
-      {
-        onSuccess: () => {
-          router.push("/");
-          setIsLoading(false);
-        },
-        onError: ({ error }) => {
-          setError(error.message);
-          setIsLoading(false);
-        },
-      }
-    );
-  };
+  const { form, error, isLoading, handleSubmit, setError, setIsLoading } =
+    useSignUp();
 
   return (
     <div className="flex flex-col gap-6">
@@ -110,7 +57,7 @@ export const SignUpView = () => {
                     )}
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="gird gap-3">
                   <FormField
                     control={form.control}
                     name="email"
@@ -170,9 +117,9 @@ export const SignUpView = () => {
                     )}
                   />
                 </div>
-                {Boolean(error) && (
+                {!!error && (
                   <Alert className="bg-destructive/10 border-destructive/20">
-                    <OctagonAlertIcon className="h-4 w-4 !text-destructive" />
+                    <GoAlert className="h-4 w-4 !text-destructive" />
                     <AlertTitle>{error}</AlertTitle>
                   </Alert>
                 )}
@@ -194,24 +141,11 @@ export const SignUpView = () => {
                     Or continue with
                   </span>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <Button
-                    variant="outline"
-                    className="w-full hover:cursor-pointer"
-                    type="button"
-                    disabled={isLoading}
-                  >
-                    Google
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full hover:cursor-pointer"
-                    type="button"
-                    disabled={isLoading}
-                  >
-                    Github
-                  </Button>
-                </div>
+                <SocialsButtons
+                  isLoading={isLoading}
+                  setError={setError}
+                  setIsLoading={setIsLoading}
+                />
                 <div className="text-center text-small">
                   Already have an account?{" "}
                   <Link
