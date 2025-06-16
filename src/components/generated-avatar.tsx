@@ -15,8 +15,9 @@ export const GeneratedAvatar = ({
   variant,
 }: GeneratedAvatarProps) => {
   const avatar = () => {
-    if (variant === "initials")
+    if (variant === "initials") {
       createAvatar(initials, { seed, fontWeight: 500, fontSize: 42 });
+    }
     return createAvatar(botttsNeutral, { seed });
   };
 

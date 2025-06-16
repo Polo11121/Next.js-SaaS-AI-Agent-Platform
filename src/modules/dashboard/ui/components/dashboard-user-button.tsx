@@ -19,13 +19,15 @@ export const DashboardUserButton = () => {
       },
     });
 
-  if (isPending || !data?.user)
+  if (isPending || !data?.user) {
     return <Skeleton className="h-[58px] w-full rounded-lg bg-white/10" />;
+  }
 
-  if (isMobile)
+  if (isMobile) {
     return (
       <DashboardUserButtonMobile onLogout={handleLogout} user={data.user} />
     );
+  }
 
   return (
     <DashboardUserButtonDesktop onLogout={handleLogout} user={data.user} />
