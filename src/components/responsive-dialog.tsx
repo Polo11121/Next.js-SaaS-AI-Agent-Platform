@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode } from "react";
 import {
   Dialog,
@@ -53,7 +55,7 @@ export const ResponsiveDialog = ({
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        children
+        {children}
       </DialogContent>
     </Dialog>
   );
