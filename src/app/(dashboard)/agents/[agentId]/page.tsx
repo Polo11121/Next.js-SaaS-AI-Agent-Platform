@@ -1,10 +1,7 @@
-import { Suspense } from "react";
-import { ErrorState } from "@/components/error-state";
-import { LoadingState } from "@/components/loading-state";
 import { AgentIdView } from "@/modules/agents/ui/views/agent-id-view";
-import { getQueryClient, trpc } from "@/trpc/server";
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { ErrorBoundary } from "react-error-boundary";
+import { trpc } from "@/trpc/server";
+import { SuspenseErrorBoundary } from "@/components/suspense-error-boundry";
+import { prefetch } from "@/server/prefetch";
 
 type AgentPageProps = {
   params: Promise<{ agentId: string }>;
@@ -12,34 +9,14 @@ type AgentPageProps = {
 
 const AgentPage = async ({ params }: AgentPageProps) => {
   const { agentId } = await params;
-  const queryClient = getQueryClient();
-
-  void queryClient.prefetchQuery(
+  const queryClient = prefetch(
     trpc.agents.getById.queryOptions({ id: agentId })
   );
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <Suspense
-        fallback={
-          <LoadingState
-            title="Loading agent"
-            description="This may take a few seconds"
-          />
-        }
-      >
-        <ErrorBoundary
-          fallback={
-            <ErrorState
-              title="Error loading agent"
-              description="Please try again later"
-            />
-          }
-        >
-          <AgentIdView agentId={agentId} />
-        </ErrorBoundary>
-      </Suspense>
-    </HydrationBoundary>
+    <SuspenseErrorBoundary queryClient={queryClient} title="agent">
+      <AgentIdView agentId={agentId} />
+    </SuspenseErrorBoundary>
   );
 };
 
