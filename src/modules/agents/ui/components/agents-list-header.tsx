@@ -10,9 +10,10 @@ import { DEFAULT_PAGE } from "@/constants";
 
 export const AgentsListHeader = () => {
   const [filters, setFilters] = useAgentsFilters();
-  const [open, setOpen] = useState(false);
+  const [isNewAgentDialogOpen, setIsNewAgentDialogOpen] = useState(false);
 
-  const handleToggleModalVisibility = () => setOpen((prev) => !prev);
+  const handleToggleDialogVisibility = () =>
+    setIsNewAgentDialogOpen((prev) => !prev);
 
   const isAnyFilterModified = !!filters.search;
 
@@ -20,11 +21,14 @@ export const AgentsListHeader = () => {
 
   return (
     <>
-      <NewAgentDialog open={open} onOpenChange={handleToggleModalVisibility} />
+      <NewAgentDialog
+        open={isNewAgentDialogOpen}
+        onOpenChange={handleToggleDialogVisibility}
+      />
       <div className="p-4 md:px-8 flex flex-col gap-y-4">
         <div className="flex items-center justify-between">
           <h5>My Agents</h5>
-          <Button onClick={handleToggleModalVisibility}>
+          <Button onClick={handleToggleDialogVisibility}>
             <PlusIcon />
             New Agent
           </Button>

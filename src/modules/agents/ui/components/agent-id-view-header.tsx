@@ -23,14 +23,14 @@ import { Button } from "@/components/ui/button";
 type AgentIdViewHeaderProps = {
   agentId: string;
   agentName: string;
-  onEdit: () => void;
+  onUpdate: () => void;
   onDelete: () => void;
 };
 
 export const AgentIdViewHeader = ({
   agentId,
   agentName,
-  onEdit,
+  onUpdate,
   onDelete,
 }: AgentIdViewHeaderProps) => (
   <div className="flex items-center justify-between">
@@ -61,11 +61,11 @@ export const AgentIdViewHeader = ({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={onEdit}>
+        <DropdownMenuItem onClick={onUpdate} className="cursor-pointer">
           <PencilIcon className="size-4 text-black" />
-          Edit
+          Update
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={onDelete}>
+        <DropdownMenuItem onClick={onDelete} className="cursor-pointer">
           <TrashIcon className="size-4 text-black" />
           Delete
         </DropdownMenuItem>

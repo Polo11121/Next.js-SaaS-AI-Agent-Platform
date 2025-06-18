@@ -1,4 +1,4 @@
-import type { AgentGetByIdOutput } from "@/modules/agents/types";
+import { AgentGetByIdOutput } from "@/modules/agents/types";
 import {
   createAgentSchema,
   type CreateAgentSchema,
@@ -12,6 +12,7 @@ import { toast } from "sonner";
 type UseAgentFormProps = {
   initialValues?: AgentGetByIdOutput;
   onSuccess?: () => void;
+  onCancel?: () => void;
 };
 
 export const useAgentForm = ({
@@ -20,9 +21,26 @@ export const useAgentForm = ({
 }: UseAgentFormProps) => {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
+  const isEdit = !!initialValues;
 
   const createAgentMutation = useMutation(
     trpc.agents.create.mutationOptions({
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(
+          trpc.agents.getMany.queryOptions({})
+        );
+
+        onSuccess?.();
+        toast.success("Agent created successfully");
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    })
+  );
+
+  const updateAgentMutation = useMutation(
+    trpc.agents.update.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
           trpc.agents.getMany.queryOptions({})
@@ -35,7 +53,7 @@ export const useAgentForm = ({
         }
 
         onSuccess?.();
-        toast.success("Agent created successfully");
+        toast.success("Agent updated successfully");
       },
       onError: (error) => {
         toast.error(error.message);
@@ -51,11 +69,15 @@ export const useAgentForm = ({
     },
   });
 
-  const onSubmit = (data: CreateAgentSchema) =>
-    createAgentMutation.mutate(data);
+  const onSubmit = (data: CreateAgentSchema) => {
+    if (isEdit) {
+      updateAgentMutation.mutate({ id: initialValues.id, ...data });
+    } else {
+      createAgentMutation.mutate(data);
+    }
+  };
 
-  const isEdit = !!initialValues;
-  const { isPending } = createAgentMutation;
+  const { isPending } = isEdit ? updateAgentMutation : createAgentMutation;
 
   return { form, onSubmit, isEdit, isPending };
 };

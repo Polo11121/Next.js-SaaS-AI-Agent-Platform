@@ -8,7 +8,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import type { AgentGetByIdOutput } from "@/modules/agents/types";
+import { AgentGetByIdOutput } from "@/modules/agents/types";
 import { useAgentForm } from "@/modules/agents/hooks/use-agent-form";
 import { GeneratedAvatar } from "@/components/generated-avatar";
 import { Textarea } from "@/components/ui/textarea";
