@@ -6,8 +6,8 @@ import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { AgentsListHeader } from "@/modules/agents/ui/components/agents-list-header";
-import { loadSearchParams } from "@/modules/agents/params";
 import { SearchParams } from "nuqs";
+import { loadSearchParams } from "@/modules/agents/params";
 
 type AgentsPageProps = {
   searchParams: Promise<SearchParams>;
