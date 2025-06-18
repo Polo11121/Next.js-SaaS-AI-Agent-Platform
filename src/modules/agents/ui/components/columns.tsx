@@ -6,13 +6,6 @@ import { GeneratedAvatar } from "@/components/generated-avatar";
 import { CornerDownRightIcon, VideoIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-export type Payment = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
-};
-
 export const columns: ColumnDef<AgentGetByIdOutput>[] = [
   {
     accessorKey: "name",
@@ -35,9 +28,11 @@ export const columns: ColumnDef<AgentGetByIdOutput>[] = [
   {
     accessorKey: "meetingCount",
     header: "Meetings",
-    cell: () => (
+    cell: ({ row }) => (
       <Badge variant="outline" className="flex items-center gap-x-2">
-        <VideoIcon className="text-blue-700 [&>svg]:size-4" /> 5 meetings
+        <VideoIcon className="text-blue-700 [&>svg]:size-4" />
+        {row.original.meetingCount}{" "}
+        {row.original.meetingCount === 1 ? "meeting" : "meetings"}
       </Badge>
     ),
   },

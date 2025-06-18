@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { PropsWithChildren } from "react";
 import { TRPCReactProvider } from "@/trpc/client";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -18,7 +19,9 @@ const RootLayout = ({ children }: Readonly<PropsWithChildren>) => (
   <html lang="en">
     <body className={`${inter.className} antialiased`}>
       <Toaster />
-      <TRPCReactProvider>{children}</TRPCReactProvider>
+      <NuqsAdapter>
+        <TRPCReactProvider>{children}</TRPCReactProvider>
+      </NuqsAdapter>
     </body>
   </html>
 );
