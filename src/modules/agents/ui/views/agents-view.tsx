@@ -2,7 +2,7 @@
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
-import { DataTable } from "@/modules/agents/ui/components/data-table";
+import { DataTable } from "@/components/data-table";
 import { columns } from "@/modules/agents/ui/components/columns";
 import { EmptyState } from "@/components/empty-state";
 import { useAgentsFilters } from "@/modules/agents/hooks/use-agents-filters";
