@@ -4,9 +4,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { NewMeetingDialog } from "@/modules/meetings/ui/components/new-meetings-dialog";
+import { SearchFilter } from "@/components/search-filter";
+import { useMeetingsFilters } from "@/modules/meetings/hooks/use-meetings-filters";
 
 export const MeetingsListHeader = () => {
+  const { filters, handleSearch, handleClearFilters } = useMeetingsFilters();
   const [isNewMeetingDialogOpen, setIsNewMeetingDialogOpen] = useState(false);
+
+  const isAnyFilterModified = !!filters.search;
 
   const handleToggleDialogVisibility = () =>
     setIsNewMeetingDialogOpen((prev) => !prev);
@@ -25,7 +30,13 @@ export const MeetingsListHeader = () => {
             New Meeting
           </Button>
         </div>
-        <div className="flex items-center gap-x-2 p-1"></div>
+        <SearchFilter
+          isAnyFilterModified={isAnyFilterModified}
+          onClearFilters={handleClearFilters}
+          placeholder="Filter by name"
+          searchTerm={filters.search}
+          onSearch={handleSearch}
+        />
       </div>
     </>
   );

@@ -10,15 +10,13 @@ import { DataPagination } from "@/modules/agents/ui/components/data-pagination";
 import { useRouter } from "next/navigation";
 
 export const AgentsView = () => {
-  const [filters, setFilters] = useAgentsFilters();
+  const { filters, handlePageChange } = useAgentsFilters();
   const trpc = useTRPC();
   const router = useRouter();
 
   const {
     data: { items, totalPages },
   } = useSuspenseQuery(trpc.agents.getMany.queryOptions(filters));
-
-  const handlePageChange = (page: number) => setFilters({ ...filters, page });
 
   return (
     <div className="flex-1 pb-4 px-4 md:px-8 flex flex-col gap-4">

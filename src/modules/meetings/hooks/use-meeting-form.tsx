@@ -95,8 +95,10 @@ export const useMeetingForm = ({
     }
   };
 
-  const toggleNewAgentDialogVisibility = () =>
+  const toggleNewAgentDialogVisibility = () => {
+    setAgentsSearch("");
     setIsNewAgentDialogOpen((prevState) => !prevState);
+  };
 
   const { isPending } = isEdit ? updateMeetingMutation : createMeetingMutation;
 

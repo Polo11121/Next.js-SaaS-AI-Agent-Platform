@@ -35,7 +35,6 @@ export const CommandSelect = ({
   const selectedOption = options.find((option) => option.id === value);
 
   const handleSelect = (value: string) => {
-    console.log("value", value);
     onSelect(value);
     setIsOpen(false);
   };
