@@ -4,7 +4,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 import { DataTable } from "@/components/data-table";
 import { columns } from "@/modules/agents/ui/components/columns";
-import { EmptyState } from "@/components/empty-state";
+import { InfoState } from "@/components/empty-state";
 import { useAgentsFilters } from "@/modules/agents/hooks/use-agents-filters";
 import { DataPagination } from "@/modules/agents/ui/components/data-pagination";
 import { useRouter } from "next/navigation";
@@ -31,7 +31,8 @@ export const AgentsView = () => {
         onPageChange={handlePageChange}
       />
       {items.length === 0 && (
-        <EmptyState
+        <InfoState
+          image="/empty.svg"
           title="Create your first agent"
           description="Create an agent to join your meetings. Each agent will follow your instructions and can interact with participants during the call."
         />

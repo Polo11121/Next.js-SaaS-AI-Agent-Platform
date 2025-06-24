@@ -20,25 +20,29 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-type AgentIdViewHeaderProps = {
-  agentId: string;
-  agentName: string;
+type ViewHeaderProps = {
+  page: "meetings" | "agents";
+  id: string;
+  name: string;
   onUpdate: () => void;
   onDelete: () => void;
 };
 
-export const AgentIdViewHeader = ({
-  agentId,
-  agentName,
+export const ViewHeader = ({
+  page,
+  id,
+  name,
   onUpdate,
   onDelete,
-}: AgentIdViewHeaderProps) => (
+}: ViewHeaderProps) => (
   <div className="flex items-center justify-between">
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild className="font-medium text-xl">
-            <Link href="/agents">My Agents</Link>
+            <Link href={`/${page}`} className="capitalize">
+              my {page}
+            </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator className="text-foreground text-xl font-medium [&_svg]:size-4">
@@ -49,7 +53,7 @@ export const AgentIdViewHeader = ({
             asChild
             className="font-medium text-xl text-foreground"
           >
-            <Link href={`/agents/${agentId}`}>{agentName}</Link>
+            <Link href={`/${page}/${id}`}>{name}</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
       </BreadcrumbList>

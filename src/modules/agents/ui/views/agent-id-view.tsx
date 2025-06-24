@@ -7,7 +7,6 @@ import {
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { AgentIdViewHeader } from "@/modules/agents/ui/components/agent-id-view-header";
 import { GeneratedAvatar } from "@/components/generated-avatar";
 import { Badge } from "@/components/ui/badge";
 import { VideoIcon } from "lucide-react";
@@ -15,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useConfirm } from "@/hooks/use-confirm";
 import { UpdateAgentDialog } from "@/modules/agents/ui/components/update-agent-dialog";
+import { ViewHeader } from "@/components/view-header";
 
 type AgentIdViewProps = {
   agentId: string;
@@ -64,9 +64,10 @@ export const AgentIdView = ({ agentId }: AgentIdViewProps) => {
   return (
     <>
       <div className="flex-1 py-4 px-4 md:px-8 flex flex-col gap-y-4">
-        <AgentIdViewHeader
-          agentId={agentId}
-          agentName={data.name}
+        <ViewHeader
+          page="agents"
+          id={agentId}
+          name={data.name}
           onUpdate={handleToggleDialogVisibility}
           onDelete={handleDelete}
         />

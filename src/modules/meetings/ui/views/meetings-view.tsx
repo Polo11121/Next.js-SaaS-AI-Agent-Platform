@@ -4,7 +4,7 @@ import { DataTable } from "@/components/data-table";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { columns } from "@/modules/meetings/ui/components/columns";
-import { EmptyState } from "@/components/empty-state";
+import { InfoState } from "@/components/empty-state";
 import { useMeetingsFilters } from "@/modules/meetings/hooks/use-meetings-filters";
 import { DataPagination } from "@/modules/agents/ui/components/data-pagination";
 import { useRouter } from "next/navigation";
@@ -31,7 +31,8 @@ export const MeetingsView = () => {
         onPageChange={handlePageChange}
       />
       {items.length === 0 && (
-        <EmptyState
+        <InfoState
+          image="/empty.svg"
           title="Create your first meeting"
           description="Schedule a meeting to connect with others. Each meeting lets you collaborate, share ideas, and interact with participants in real time."
         />
