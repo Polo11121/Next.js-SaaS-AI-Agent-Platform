@@ -20,13 +20,20 @@ export const useMeetingsFilters = () => {
       clearOnDefault: true,
     }),
   });
-  const isAnyFilterModified = !!filters.search;
+  const isAnyFilterModified =
+    !!filters.agentId || !!filters.search || !!filters.status;
 
   const handleClearFilters = () => {
-    setFilters({ search: "", page: DEFAULT_PAGE });
+    setFilters({ search: "", page: DEFAULT_PAGE, agentId: "", status: null });
   };
 
   const handlePageChange = (page: number) => setFilters({ ...filters, page });
+
+  const handleStatusChange = (status: string) =>
+    setFilters({ ...filters, status: status as MeetingStatus });
+
+  const handleAgentIdChange = (agentId: string) =>
+    setFilters({ ...filters, agentId });
 
   const handleSearch = (value: string) =>
     setFilters({ ...filters, search: value });
@@ -37,5 +44,7 @@ export const useMeetingsFilters = () => {
     handleClearFilters,
     handlePageChange,
     handleSearch,
+    handleStatusChange,
+    handleAgentIdChange,
   };
 };

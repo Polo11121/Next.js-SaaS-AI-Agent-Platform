@@ -11,6 +11,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { GeneratedAvatar } from "@/components/generated-avatar";
+import { MAX_PAGE_SIZE } from "@/constants";
 
 type UseMeetingFormProps = {
   initialValues?: MeetingGetByIdOutput;
@@ -31,7 +32,7 @@ export const useMeetingForm = ({
 
   const agents = useQuery(
     trpc.agents.getMany.queryOptions({
-      pageSize: 100,
+      pageSize: MAX_PAGE_SIZE,
       search: agentsSearch,
     })
   );

@@ -12,7 +12,7 @@ type MeetingsPageProps = {
 
 const MeetingPage = async ({ searchParams }: MeetingsPageProps) => {
   const filters = await loadSearchParams(searchParams);
-  const queryClient = prefetch(trpc.agents.getMany.queryOptions(filters));
+  const queryClient = prefetch(trpc.meetings.getMany.queryOptions(filters));
 
   return (
     <>
