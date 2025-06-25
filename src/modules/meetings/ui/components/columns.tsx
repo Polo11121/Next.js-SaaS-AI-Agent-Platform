@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import humanizeDuration from "humanize-duration";
 import { Badge } from "@/components/ui/badge";
-import { MeetingGetManyOutput } from "@/modules/meetings/types";
+import { MeetingGetManyOutput, MeetingStatus } from "@/modules/meetings/types";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
@@ -87,7 +87,7 @@ export const columns: ColumnDef<Meeting>[] = [
         >
           <Icon
             className={cn(
-              row.original.status === "processing" && "animate-spin"
+              row.original.status === MeetingStatus.Processing && "animate-spin"
             )}
           />
           {row.original.status}

@@ -30,7 +30,10 @@ export const MeetingIdView = ({ meetingId }: MeetingIdViewProps) => {
   const { data } = useSuspenseQuery(
     trpc.meetings.getById.queryOptions({ id: meetingId })
   );
-  const [ConfirmDialog, confirm] = useConfirm("Are you sure?", ``);
+  const [ConfirmDialog, confirm] = useConfirm(
+    "Are you sure?",
+    "This action is irreversible"
+  );
   const deleteMeeting = useMutation(
     trpc.meetings.delete.mutationOptions({
       onSuccess: async () => {
