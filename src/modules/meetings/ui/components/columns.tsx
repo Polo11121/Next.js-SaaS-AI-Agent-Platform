@@ -10,20 +10,12 @@ import {
   CircleXIcon,
   ClockFadingIcon,
 } from "lucide-react";
-import humanizeDuration from "humanize-duration";
 import { Badge } from "@/components/ui/badge";
 import { MeetingGetManyOutput, MeetingStatus } from "@/modules/meetings/types";
 import { format } from "date-fns";
-import { cn } from "@/lib/utils";
+import { cn, formatDuration } from "@/lib/utils";
 
 type Meeting = MeetingGetManyOutput[number];
-
-const formatDuration = (seconds: number) =>
-  humanizeDuration(seconds * 1000, {
-    largest: 1,
-    round: true,
-    units: ["h", "m", "s"],
-  });
 
 const statusIconMap = {
   upcoming: ClockArrowUpIcon,
